@@ -4,14 +4,13 @@
 # BUILD: docker build --rm -t puckel/docker-airflow .
 # SOURCE: https://github.com/puckel/docker-airflow
 
-FROM ubuntu:latest
-LABEL maintainer="[NULL]"
+FROM ubuntu:18.04
+LABEL maintainer="unizin-brantlee"
 
 # Never prompts the user for choices on installation/configuration of packages
 ENV DEBIAN_FRONTEND noninteractive
 ENV TERM linux
 RUN apt-get update && apt-get install -y locales apt-utils \
-    && rm -rf /var/lib/apt/lists/* \
     && localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8
 
 # Define en_US.
@@ -27,23 +26,25 @@ ARG AIRFLOW_HOME=/usr/local/airflow
 
 
 RUN set -ex \
+    && apt-get update -yqq \
+    && apt-get upgrade -yqq
+
+RUN set -ex \
     && buildDeps=' \
         python3-dev \
-        python2-dev \
         libkrb5-dev \
         libsasl2-dev \
         libssl-dev \
         libffi-dev \
         build-essential \
+        python-dev \
+        autoconf \
+        libtool \
         libblas-dev \
         liblapack-dev \
         libpq-dev \
         git \
     ' \
-    && apt-get update -yqq \
-    && apt-get upgrade -yqq
-
-RUN set -ex \
     && apt-get install -yqq --no-install-recommends \
         $buildDeps \
         python3-pip \
@@ -52,10 +53,6 @@ RUN set -ex \
         curl \
         rsync \
         netcat \
-        build-essential \
-        python-dev \
-        autoconf \
-        libtool \
     && apt-get install -y \
         postgresql-client \
     && useradd -ms /bin/bash -d ${AIRFLOW_HOME} airflow \
