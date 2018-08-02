@@ -134,7 +134,7 @@ spec:
       restartPolicy: Always
       containers:
       - name: web
-        image: puckel/docker-airflow:1.9.0-4
+        image: us.gcr.io/udp-shared-dev/unizin-airflow:1.9.0-gcp
         env:
         - name: AIRFLOW_HOME
           value: "/usr/local/airflow"
@@ -164,7 +164,7 @@ spec:
       restartPolicy: Always
       containers:
       - name: flower
-        image: puckel/docker-airflow:1.9.0-4
+        image: us.gcr.io/udp-shared-dev/unizin-airflow:1.9.0-gcp
         env:
         - name: AIRFLOW_HOME
           value: "/usr/local/airflow"
@@ -191,7 +191,7 @@ spec:
       restartPolicy: Always
       containers:
       - name: scheduler
-        image: puckel/docker-airflow:1.9.0-4
+        image: us.gcr.io/udp-shared-dev/unizin-airflow:1.9.0-gcp
         # volumes:
         #     - /localpath/to/dags:/usr/local/airflow/dags
         env:
@@ -214,7 +214,7 @@ spec:
       restartPolicy: Always
       containers:
       - name: worker
-        image: puckel/docker-airflow:1.9.0-4
+        image: us.gcr.io/udp-shared-dev/unizin-airflow:1.9.0-gcp
         # volumes:
         #     - /localpath/to/dags:/usr/local/airflow/dags
         env:
